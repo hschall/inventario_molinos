@@ -25,7 +25,8 @@ class WarehousesController < ApplicationController
 
     respond_to do |format|
       if @warehouse.save
-        format.html { redirect_to @warehouse, notice: "Warehouse was successfully created." }
+        flash[:notice] = "El CEDIS fue creado con exito."
+        format.html { redirect_to @warehouse }
         format.json { render :show, status: :created, location: @warehouse }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,8 @@ class WarehousesController < ApplicationController
   def update
     respond_to do |format|
       if @warehouse.update(warehouse_params)
-        format.html { redirect_to @warehouse, notice: "Warehouse was successfully updated." }
+        flash[:notice] = "El CEDIS fue actualizado con exito."
+        format.html { redirect_to @warehouse }
         format.json { render :show, status: :ok, location: @warehouse }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,9 +53,9 @@ class WarehousesController < ApplicationController
   def destroy
   begin
     @warehouse.destroy!
-    flash[:success] = "Warehouse was successfully deleted."
+    flash[:success] = "El CEDIS fue eliminado con exito."
   rescue ActiveRecord::InvalidForeignKey
-    flash[:error] = "Cannot delete warehouse because it has associated shipments or records."
+    flash[:error] = "No se puede eliminar este CEDIS porque hay envios relacionados con el."
   end
 
   respond_to do |format|

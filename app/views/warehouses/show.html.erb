@@ -1,10 +1,8 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @warehouse %>
 
 <div>
   <%= link_to "Editar", edit_warehouse_path(@warehouse) %> |
-  <%= link_to "Regresar a Almacenes", warehouses_path %>
+  <%= link_to "Regresar lista de CEDIS", warehouses_path %>
 
-  <%= button_to "Eliminar Almacen", @warehouse, method: :delete %>
+  <%= button_to "Eliminar CEDIS", @warehouse, method: :delete %>
 </div>

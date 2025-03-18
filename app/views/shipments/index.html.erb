@@ -4,12 +4,12 @@
   <!-- Add Button to Create New Shipment -->
   <%= link_to "Crear Envio", new_shipment_path, class: "btn btn-primary mb-3" %>
 
-  <table class="table table-striped">
+  <table class="table table-striped align-middle text-center">
     <thead>
       <tr>
         <th>Codigo de Envio</th>
-        <th>Alamacen</th>
-        <th>Sucursal</th>
+        <th>Origen</th>
+        <th>Destino</th>
         <th>Estatus</th>
         <th colspan="2">Acciones</th>
       </tr>
@@ -25,7 +25,7 @@
               <% when "Pending" %>
                 <%= "⏳ Pendiente" %>
               <% when "In Transit" %>
-                <%= "🚚 En Camino" %>
+                <%= "🚚 En Ruta" %>
               <% when "Arrived" %>
                 <%= "📥 Recibido" %>
               <% when "Completed" %>

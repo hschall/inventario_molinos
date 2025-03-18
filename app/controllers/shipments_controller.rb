@@ -35,10 +35,10 @@ end
   )
 
   if @shipment.save
-    flash[:notice] = "Shipment created successfully!"
+    flash[:notice] = "Envio creado correctamente!"
     redirect_to shipment_path(@shipment)
   else
-    flash[:alert] = "Failed to create shipment."
+    flash[:alert] = "No se pudo crear el Envio."
     render :new
   end
 end
@@ -49,9 +49,9 @@ end
 
     if @shipment
       @shipment.destroy # This will remove the shipment and its related shipment_items
-      flash[:success] = "Shipment deleted successfully."
+      flash[:success] = "Envio eliminado correctamente!."
     else
-      flash[:error] = "Shipment not found!"
+      flash[:error] = "No se encontro el envio!"
     end
 
     redirect_to shipments_path
@@ -59,7 +59,7 @@ end
 
   def add_item
   if @shipment.status != "Pending"
-    flash[:alert] = "You cannot modify this shipment as it has already been submitted."
+    flash[:alert] = "No se puede modificar este Envio porque ya esta En Ruta."
     return redirect_to shipment_path(@shipment)
   end
 
@@ -72,9 +72,9 @@ end
     item.quantity += 1
     item.save!
 
-    flash[:success] = "Product #{product.product_name} added to shipment."
+    flash[:success] = "El Producto #{product.product_name} ha sido agregado al Envio."
   else
-    flash[:error] = "Product with barcode #{barcode} not found!"
+    flash[:error] = "Producto con Codigo de Barras #{barcode} no fue encontrado!"
   end
 
   redirect_to shipment_path(@shipment)
@@ -87,13 +87,13 @@ end
   @shipment = Shipment.find_by(id: shipment_id) # Find the shipment
 
   unless @shipment
-    flash[:error] = "Shipment not found!"
+    flash[:error] = "Envio no encontrado!"
     return redirect_to shipments_path
   end
 
   # Prevent removal if the shipment has been submitted
   if @shipment.status != "Pending"
-    flash[:alert] = "You cannot remove items from a submitted shipment."
+    flash[:alert] = "No se pueden eliminar productos despues de mandar el envio."
     return redirect_to shipment_path(@shipment)
   end
 
@@ -101,9 +101,9 @@ end
 
   if item
     item.destroy
-    flash[:success] = "Item removed successfully."
+    flash[:success] = "Producto eliminado con exito."
   else
-    flash[:error] = "Item not found in shipment!"
+    flash[:error] = "Producto no se encontro en el envio!"
   end
 
   redirect_to shipment_path(@shipment)
@@ -113,9 +113,9 @@ end
   def submit_shipment
   if @shipment.status == "Pending"
     @shipment.update(status: "In Transit")
-    flash[:notice] = "Shipment successfully submitted and is now in transit."
+    flash[:notice] = "Envio se encuentra en ruta."
   else
-    flash[:alert] = "This shipment cannot be submitted."
+    flash[:alert] = "No se puede mandar este Envio."
   end
   redirect_to shipments_path
 end
@@ -125,11 +125,11 @@ end
     @shipment.update(status: "Arrived")
 
     respond_to do |format|
-      format.html { redirect_to shipment_path(@shipment), notice: "Shipment successfully marked as Arrived." } # ✅ Redirects back to shipment details
+      format.html { redirect_to shipment_path(@shipment), notice: "Envio recibido correctamente!." } # ✅ Redirects back to shipment details
       format.turbo_stream # ✅ Turbo-stream to update status dynamically
     end
   else
-    flash[:alert] = "This shipment cannot be marked as Arrived."
+    flash[:alert] = "No fue posible recibir el envio."
     redirect_to shipment_path(@shipment) # ✅ Stay on the same page
   end
 end
@@ -141,13 +141,13 @@ def scan_received_item
   @shipment = Shipment.find_by(id: shipment_id)
 
   unless @shipment
-    flash[:error] = "Shipment not found!"
+    flash[:error] = "Envio no encontrado!"
     return redirect_to shipments_path
   end
 
   # Ensure the shipment is in "Arrived" state
   unless @shipment.status == "Arrived"
-    flash[:alert] = "Cannot scan items for this shipment unless it has arrived."
+    flash[:alert] = "No se pueden escanear productos hasta que el envio haya sido recibido."
     return redirect_to shipment_path(@shipment)
   end
 
@@ -162,7 +162,7 @@ def scan_received_item
 
     flash[:success] = "Scanned item: #{barcode}. Total received: #{received_item.quantity}"
   else
-    flash[:error] = "Barcode not found in shipment!"
+    flash[:error] = "Codigo de barras no encontrado en el envio!"
   end
 
   redirect_to shipment_path(@shipment)
@@ -176,11 +176,11 @@ def complete_shipment
     @shipment.update!(status: "Completed", has_discrepancies: discrepancies_exist) # Force save!
 
     respond_to do |format|
-      format.html { redirect_to shipment_path(@shipment), notice: "Shipment marked as completed." }
+      format.html { redirect_to shipment_path(@shipment), notice: "Ha completado la recepcion del Envio!." }
       format.turbo_stream
     end
   else
-    flash[:alert] = "This shipment cannot be marked as completed."
+    flash[:alert] = "Error al completar el envio."
     redirect_to shipment_path(@shipment)
   end
 end
@@ -205,7 +205,7 @@ end
   @shipment = Shipment.find_by(id: shipment_id)
 
   unless @shipment
-    flash[:error] = "Shipment not found!"
+    flash[:error] = "Envio no encontrado!"
     redirect_to shipments_path
   end
 

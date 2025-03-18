@@ -12,12 +12,12 @@ class InventoriesController < ApplicationController
       @inventory = Inventory.new(product: product, barcode: barcode)
 
       if @inventory.save
-        flash[:notice] = "Product added to inventory successfully."
+        flash[:notice] = "Producto agregado correctamente al inventario."
       else
-        flash[:alert] = "Failed to add product to inventory."
+        flash[:alert] = "No se pudo agregar el producto al inventario."
       end
     else
-      flash[:alert] = "No product found with this barcode."
+      flash[:alert] = "No se encontro ningun producto con ese Codigo de Barras."
     end
     
     redirect_to inventories_path
@@ -26,7 +26,7 @@ class InventoriesController < ApplicationController
   def destroy
     @inventory = Inventory.find(params[:id])
     @inventory.destroy
-    flash[:notice] = "Inventory item removed successfully."
+    flash[:notice] = "Producto eliminado correctamente del inventario."
     redirect_to inventories_path
   end
 end

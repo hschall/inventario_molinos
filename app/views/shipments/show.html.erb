@@ -1,12 +1,3 @@
-  <% if flash[:alert] %>
-    <div class="alert alert-danger mt-3"><%= flash[:alert] %></div>
-  <% end %>
-
-  <% if flash[:notice] %>
-    <div class="alert alert-success mt-3"><%= flash[:notice] %></div>
-  <% end %>
-
-
 <div class="mt-4">
   <div class="d-flex align-items-center justify-content-between">
     <h2 class="mb-0">Envio #<%= @shipment.shipment_number %></h2>
@@ -41,8 +32,8 @@
     class: "btn btn-secondary mt-3" %>
 <% end %>
 
-<p><strong>Almacen:</strong> <%= @shipment.from_warehouse&.name || "N/A" %></p>
-<p><strong>Sucursal:</strong> <%= @shipment.po&.name || "N/A" %></p>
+<p><strong>Origen:</strong> <%= @shipment.from_warehouse&.name || "N/A" %></p>
+<p><strong>Destino:</strong> <%= @shipment.po&.name || "N/A" %></p>
 
 <!-- ✅ Turbo-target for dynamic shipment status update -->
 <p id="shipment_status"><strong>Status:</strong> 
@@ -51,7 +42,7 @@
     when "Pending"
       "⏳ Pendiente"
     when "In Transit"
-      "🚚 En camino"
+      "🚚 En Ruta"
     when "Arrived"
       "📥 Recibido"
     when "Completed"
@@ -89,7 +80,7 @@
   <% end %>
 
 <% else %>
-  <p class="text-danger fw-bold mt-3">⚠️ No se permite modificar el envio cuando esta en camino o una vez que haya sido completado.</p>
+  <p class="text-danger fw-bold mt-3">⚠️ No se permite modificar el envio cuando esta en ruta o una vez que haya sido completado.</p>
 <% end %> 
 
 <h3 class="mt-4">Productos enviados vs. Productos recibidos</h3>

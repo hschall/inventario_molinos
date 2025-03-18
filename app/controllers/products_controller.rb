@@ -51,9 +51,9 @@ class ProductsController < ApplicationController
   def destroy
   begin
     @product.destroy!
-    flash[:success] = "Product was successfully deleted."
+    flash[:success] = "Producto se ha eliminado correctamente."
   rescue ActiveRecord::InvalidForeignKey
-    flash[:error] = "Cannot delete product because it is associated with one or more shipments."
+    flash[:error] = "No se puede eliminar este Producto porque hay envios relacionados con el."
   end
 
   respond_to do |format|

@@ -38,7 +38,7 @@ class PosController < ApplicationController
   def update
     respond_to do |format|
       if @po.update(po_params)
-        format.html { redirect_to @po, notice: "Po was successfully updated." }
+        format.html { redirect_to @po, notice: "La Sucursal ha sido actualizada." }
         format.json { render :show, status: :ok, location: @po }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,9 +51,9 @@ class PosController < ApplicationController
   def destroy
   begin
     @po.destroy!
-    flash[:success] = "POS was successfully deleted."
+    flash[:success] = "La Sucursal se ha eliminado con exito."
   rescue ActiveRecord::InvalidForeignKey
-    flash[:error] = "Cannot delete POS because it has associated shipments or records."
+    flash[:error] = "No se puede eliminar esta Sucursal porque hay envios relacionados con ella."
   end
 
   respond_to do |format|
