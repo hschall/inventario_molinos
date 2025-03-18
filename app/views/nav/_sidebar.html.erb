@@ -1,30 +1,46 @@
 <div class="sidebar collapse show" id="sidebar">
-  <!-- Links Section -->
+  <!-- Master Data Management Collapsible Section -->
+  <div class="nav-item">
+    <a class="nav-link d-flex align-items-center" href="#" id="masterDataToggle">
+  <%= image_tag("chicken.svg", alt: "Gestión de Datos Maestros", class: "me-2", style: "max-height: 20px;") %>
+  Gestión de Datos Maestros
+  <i class="fas fa-chevron-down ms-auto" id="chevron-icon"></i>
+</a>
+    <div id="masterDataCollapse" class="ms-3 collapse show">
+      <ul class="list-unstyled">
+        <li>
+          <%= link_to warehouses_path, class: "d-flex align-items-center" do %>
+            <%= image_tag("warehouse.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+            Crear CEDIS
+          <% end %>
+        </li>
+        <li>
+          <%= link_to pos_path, class: "d-flex align-items-center" do %>
+            <%= image_tag("POS.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+            Crear Sucursales
+          <% end %>
+        </li>
+        <li>
+          <%= link_to products_path, class: "d-flex align-items-center" do %>
+            <%= image_tag("product.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+            Crear Productos
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Other Sidebar Links -->
   <div>
-    <%= link_to warehouses_path, class: "d-flex align-items-center" do %>
-      <%= image_tag("warehouse.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
-      Crear CEDIS
-    <% end %>
-
-    <%= link_to pos_path, class: "d-flex align-items-center" do %>
-      <%= image_tag("POS.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
-      Crear Sucursales
-    <% end %>
-
-      <%= link_to products_path, class: "d-flex align-items-center" do %>
-        <%= image_tag("product.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
-      Crear Productos
-      <% end %>
-
-      <%= link_to shipments_path, class: "d-flex align-items-center" do %>
-        <%= image_tag("shipment.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+    <%= link_to shipments_path, class: "d-flex align-items-center" do %>
+      <%= image_tag("shipment.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
       Crear Envios
-      <% end %>
+    <% end %>
 
-      <%= link_to dashboard_pos_path, class: "d-flex align-items-center" do %>
-        <%= image_tag("dashboard.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+    <%= link_to dashboard_pos_path, class: "d-flex align-items-center" do %>
+      <%= image_tag("dashboard.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
       Sucursales
-      <% end %>
+    <% end %>
   </div>
 
   <!-- Divider Line Above User Dropdown -->

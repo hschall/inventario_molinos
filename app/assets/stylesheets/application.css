@@ -156,3 +156,6 @@
   overflow-y: auto;
 }
 
+.text-blue {
+  color: #f05a10 !important;
+}

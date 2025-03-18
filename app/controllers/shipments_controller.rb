@@ -10,7 +10,7 @@ class ShipmentsController < ApplicationController
   @shipment = Shipment.find_by(id: params[:id])
   
   if @shipment.nil?
-    flash[:error] = "Shipment not found!"
+    flash[:error] = "Envio no encontrado!"
     redirect_to shipments_path
   end
 end
@@ -24,7 +24,7 @@ end
   def create
   # Ensure that both warehouse and POS are selected
   if params[:shipment][:from_warehouse_id].blank? || params[:shipment][:po_id].blank?
-    flash[:alert] = "Both Warehouse and POS must be selected to create a shipment."
+    flash[:alert] = "Debe seleccionar Origen y Destino para poder crear un Envio."
     return redirect_to new_shipment_path
   end
 
@@ -49,7 +49,7 @@ end
 
     if @shipment
       @shipment.destroy # This will remove the shipment and its related shipment_items
-      flash[:success] = "Envio eliminado correctamente!."
+      flash[:success] = "Envio eliminado correctamente!"
     else
       flash[:error] = "No se encontro el envio!"
     end
@@ -125,7 +125,7 @@ end
     @shipment.update(status: "Arrived")
 
     respond_to do |format|
-      format.html { redirect_to shipment_path(@shipment), notice: "Envio recibido correctamente!." } # ✅ Redirects back to shipment details
+      format.html { redirect_to shipment_path(@shipment), notice: "Envio recibido correctamente!" } # ✅ Redirects back to shipment details
       format.turbo_stream # ✅ Turbo-stream to update status dynamically
     end
   else
@@ -176,7 +176,7 @@ def complete_shipment
     @shipment.update!(status: "Completed", has_discrepancies: discrepancies_exist) # Force save!
 
     respond_to do |format|
-      format.html { redirect_to shipment_path(@shipment), notice: "Ha completado la recepcion del Envio!." }
+      format.html { redirect_to shipment_path(@shipment), notice: "Ha completado la recepcion del Envio!" }
       format.turbo_stream
     end
   else

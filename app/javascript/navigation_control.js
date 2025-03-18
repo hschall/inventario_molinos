@@ -1,57 +1,89 @@
 document.addEventListener('DOMContentLoaded', function () {
   const sidebar = document.getElementById('sidebar');
   const toggleButton = document.querySelector('.sidebar-toggle');
-  const sidebarLinks = sidebar.querySelectorAll('a'); // All links in the sidebar
-  const dropdownToggles = sidebar.querySelectorAll('.nav-item.dropdown .nav-link'); // Dropdown toggles
+  const sidebarLinks = sidebar.querySelectorAll('a');
+  const dropdownToggles = sidebar.querySelectorAll('.nav-item.dropdown .nav-link');
 
-  // Toggle sidebar visibility on button click
+  // ✅ Master Data Management Toggle
+  const masterDataToggle = document.getElementById('masterDataToggle');
+  const masterDataCollapse = document.getElementById('masterDataCollapse');
+  const chevronIcon = document.getElementById('chevron-icon');
+
+  if (masterDataToggle && masterDataCollapse) {
+    let isExpanded = localStorage.getItem('masterDataExpanded') === 'true';
+
+    if (isExpanded) {
+      masterDataCollapse.style.display = 'block';
+      chevronIcon.classList.add('rotate');
+      masterDataToggle.classList.add('text-blue'); // ✅ Apply blue color when expanded
+    } else {
+      masterDataCollapse.style.display = 'none';
+      chevronIcon.classList.remove('rotate');
+      masterDataToggle.classList.remove('text-blue'); // ✅ Remove blue color when collapsed
+    }
+
+    masterDataToggle.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      if (masterDataCollapse.style.display === 'none') {
+        masterDataCollapse.style.display = 'block';
+        chevronIcon.classList.add('rotate');
+        masterDataToggle.classList.add('text-blue'); // ✅ Turn blue
+        localStorage.setItem('masterDataExpanded', 'true');
+      } else {
+        masterDataCollapse.style.display = 'none';
+        chevronIcon.classList.remove('rotate');
+        masterDataToggle.classList.remove('text-blue'); // ✅ Revert color
+        localStorage.setItem('masterDataExpanded', 'false');
+      }
+    });
+  }
+
+  // ✅ Toggle sidebar visibility on button click
   toggleButton.addEventListener('click', function () {
     sidebar.classList.toggle('show');
   });
 
-  // Collapse sidebar when clicking a sidebar link (except dropdown toggles)
+  // ✅ Collapse sidebar when clicking a sidebar link (except dropdown toggles)
   sidebarLinks.forEach(link => {
     link.addEventListener('click', function (event) {
-      // Ignore clicks on dropdown toggles
       if (event.target.closest('.nav-item.dropdown')) {
         return;
       }
-
-      // Collapse sidebar only on mobile
       if (window.innerWidth < 992) {
         sidebar.classList.remove('show');
       }
     });
   });
 
-  // Ensure sidebar visibility updates on window resize
+  // ✅ Ensure sidebar visibility updates on window resize
   window.addEventListener('resize', function () {
     if (window.innerWidth >= 992) {
-      sidebar.classList.add('show'); // Ensure visible on desktop
-      sidebar.classList.remove('hide-mobile'); // Remove mobile-only hidden state
+      sidebar.classList.add('show');
+      sidebar.classList.remove('hide-mobile');
     } else {
-      sidebar.classList.add('hide-mobile'); // Add mobile-only hidden state
-      sidebar.classList.remove('show'); // Ensure hidden on mobile
+      sidebar.classList.add('hide-mobile');
+      sidebar.classList.remove('show');
     }
   });
 
-  // Set initial visibility based on screen size
+  // ✅ Set initial visibility based on screen size
   if (window.innerWidth >= 992) {
-    sidebar.classList.add('show'); // Ensure visible on desktop
-    sidebar.classList.remove('hide-mobile'); // Remove mobile-only hidden state
+    sidebar.classList.add('show');
+    sidebar.classList.remove('hide-mobile');
   } else {
-    sidebar.classList.add('hide-mobile'); // Add mobile-only hidden state
-    sidebar.classList.remove('show'); // Ensure hidden on mobile
+    sidebar.classList.add('hide-mobile');
+    sidebar.classList.remove('show');
   }
 
-  // Dynamic form submission for filters
-  const filterElements = document.querySelectorAll('.filter-trigger'); // Filter dropdowns
-  const filterForm = document.getElementById('filterForm'); // Filter form
+  // ✅ Dynamic form submission for filters
+  const filterElements = document.querySelectorAll('.filter-trigger');
+  const filterForm = document.getElementById('filterForm');
 
   if (filterElements && filterForm) {
     filterElements.forEach(element => {
       element.addEventListener('change', function () {
-        filterForm.submit(); // Submit the form when a filter value changes
+        filterForm.submit();
       });
     });
   }
