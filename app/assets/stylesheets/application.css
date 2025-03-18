@@ -1,0 +1,158 @@
+/* Sidebar */
+.sidebar {
+  height: calc(100vh - 56px); /* Full height minus navbar height */
+  width: 240px; /* Sidebar width */
+  background-color: #ffffff; /* White background */
+  color: #212529; /* Dark text color for contrast */
+  position: fixed;
+  top: 56px; /* Position it below the navbar */
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1020; /* Ensure it stays on top of the footer */
+  transition: transform 0.3s ease; /* Smooth transition for responsiveness */
+  transform: translateX(0); /* Visible by default on desktop */
+  overflow-y: auto; /* Enable scrolling for overflowing content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
+}
+
+/* Sidebar Links */
+.sidebar a {
+  color: #212529; /* Dark text color for better contrast on white */
+  text-decoration: none;
+  padding: 10px 10px;
+  font-size: 16px; /* Increase font size (default is typically ~14px) */
+  display: flex;
+  align-items: center;
+  border-radius: 4px; /* Add slight rounding for link background hover */
+}
+
+.sidebar a.active {
+  background-color: #007bff; /* Blue background for active links */
+  color: #ffffff; /* White text for contrast */
+}
+
+.sidebar a:hover {
+  background-color: #f8f9fa; /* Light gray hover effect */
+  color: #212529;
+}
+
+.sidebar i {
+  margin-right: 8px; /* Icon spacing */
+  font-size: 18px; /* Increase icon size to match larger font */
+}
+
+/* Divider Styles */
+.sidebar hr {
+  border-color: #dee2e6; /* Light gray divider */
+  margin: 10px 0; /* Add spacing above and below the line */
+  border-width: 1px;
+}
+
+/* User Dropdown */
+.user-dropdown {
+  margin-top: auto; /* Push user dropdown to the bottom */
+  padding: 10px 0; /* Add spacing around the dropdown */
+  border-top: 1px solid #dee2e6; /* Light gray divider above dropdown */
+}
+
+.user-dropdown .nav-item {
+  list-style: none; /* Remove list-style bullet points */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+.user-dropdown .dropdown-menu {
+  background-color: #ffffff; /* Match sidebar background */
+  border: 1px solid #dee2e6; /* Light gray border */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove extra padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow to dropdown menu */
+}
+
+.user-dropdown .dropdown-item {
+  color: #212529; /* Dark text color for better contrast */
+}
+
+.user-dropdown .dropdown-item:hover {
+  background-color: #f8f9fa; /* Light gray hover effect */
+  color: #212529;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 240px; /* Align content to the right of the sidebar */
+  padding: 20px;
+  padding-top: 56px; /* Space for navbar */
+  padding-bottom: 35px; /* Space for footer */
+  min-height: calc(105vh - 56px); /* Full height minus navbar */
+  box-sizing: border-box; /* Include padding in height calculation */
+  overflow-y: auto; /* Allow scrolling if content exceeds available height */
+  background-color: #f8f8f8;
+}
+
+/* Footer */
+.footer {
+  height: 20px;
+  background-color: #ba2e2e;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 240px; /* Adjust to match sidebar width */
+  width: calc(100% - 240px); /* Ensures it spans the remaining space */
+  z-index: 1010;
+  display: flex;
+  align-items: center;
+  justify-content: right; /* Centers text */
+  font-size: 15px;
+}
+
+
+/* Mobile View - Sidebar Hidden by Default */
+@media (max-width: 992px) {
+  .sidebar {
+    transform: translateX(-100%); /* Sidebar hidden by default on mobile */
+    width: 100%; /* Sidebar takes full width on smaller screens */
+  }
+
+  .sidebar.show {
+    transform: translateX(0); /* Sidebar visible when toggled */
+  }
+
+  .main-content {
+    margin-left: 0; /* Remove sidebar margin for smaller screens */
+  }
+}
+
+/* Desktop View - Sidebar Always Visible */
+@media (min-width: 992px) {
+  .sidebar {
+    transform: translateX(0); /* Always visible on larger screens */
+  }
+}
+
+.pagination {
+  margin: 1rem 0;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.page-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.page-link:hover {
+  background-color: #e9ecef;
+  color: #0056b3;
+}
+
+.table-responsive {
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto;
+}
+

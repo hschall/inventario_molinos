@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @po %>
+
+<div>
+  <%= link_to "Editar", edit_po_path(@po) %> |
+  <%= link_to "Regresar a Sucursales", pos_path %>
+
+  <%= button_to "Eliminar Sucursal", @po, method: :delete %>
+</div>

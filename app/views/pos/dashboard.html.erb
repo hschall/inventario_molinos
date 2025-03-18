@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2>📍Tablero de Sucursales</h2>
+  <div class="row">
+    <% @pos_locations.each do |pos| %>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title"><%= pos.name %></h5>
+            <p class="card-text">
+              <strong>Total Envios:</strong> <%= @shipment_status_counts[pos.id][:total] %> <br>
+              <strong>Pendientes:</strong> <%= @shipment_status_counts[pos.id][:pending] %> <br>
+              <strong>En Camino:</strong> <%= @shipment_status_counts[pos.id][:in_transit] %> <br>
+              <strong>Recibidos:</strong> <%= @shipment_status_counts[pos.id][:arrived] %> <br>
+              <strong>Completados:</strong> <%= @shipment_status_counts[pos.id][:completed] %>
+            </p>
+            <%= link_to "Ver Envios", shipments_po_path(pos), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,52 @@
+<div class="sidebar collapse show" id="sidebar">
+  <!-- Links Section -->
+  <div>
+    <%= link_to warehouses_path, class: "d-flex align-items-center" do %>
+      <%= image_tag("warehouse.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+      Crear CEDIS
+    <% end %>
+
+    <%= link_to pos_path, class: "d-flex align-items-center" do %>
+      <%= image_tag("POS.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+      Crear Sucursales
+    <% end %>
+
+      <%= link_to products_path, class: "d-flex align-items-center" do %>
+        <%= image_tag("product.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+      Crear Productos
+      <% end %>
+
+      <%= link_to shipments_path, class: "d-flex align-items-center" do %>
+        <%= image_tag("shipment.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+      Crear Envios
+      <% end %>
+
+      <%= link_to dashboard_pos_path, class: "d-flex align-items-center" do %>
+        <%= image_tag("dashboard.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+      Sucursales
+      <% end %>
+  </div>
+
+  <!-- Divider Line Above User Dropdown -->
+  <hr class="user-dropdown-divider">
+
+  <!-- User Dropdown -->
+  <div class="user-dropdown">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-user me-1"></i> Usuario
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li>
+          <%= link_to "Editar Usuario", root_path, class: "dropdown-item" %>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <%# <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" %> %>
+        </li>
+      </ul>
+    </li>
+  </div>
+</div>

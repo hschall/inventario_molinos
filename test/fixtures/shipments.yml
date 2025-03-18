@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_warehouse: one
+  to_pos: one
+  shipment_number: MyString
+  status: MyString
+
+two:
+  from_warehouse: two
+  to_pos: two
+  shipment_number: MyString
+  status: MyString

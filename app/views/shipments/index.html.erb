@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <h2>Envios</h2>
+
+  <!-- Add Button to Create New Shipment -->
+  <%= link_to "Crear Envio", new_shipment_path, class: "btn btn-primary mb-3" %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Codigo de Envio</th>
+        <th>Alamacen</th>
+        <th>Sucursal</th>
+        <th>Estatus</th>
+        <th colspan="2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shipments.each do |shipment| %>
+        <tr>
+          <td><%= shipment.shipment_number %></td>
+          <td><%= shipment.from_warehouse.name %></td>
+          <td><%= shipment.po.name %></td>
+          <td>
+            <% case shipment.status %>
+              <% when "Pending" %>
+                <%= "⏳ Pendiente" %>
+              <% when "In Transit" %>
+                <%= "🚚 En Camino" %>
+              <% when "Arrived" %>
+                <%= "📥 Recibido" %>
+              <% when "Completed" %>
+                <% if shipment.has_discrepancies? %>
+                  <%= "❗ Completado con diferencias" %>
+                <% else %>
+                  <%= "✅ Completado" %>
+                <% end %>
+              <% else %>
+                <%= "❓ Unknown" %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "Ver", shipment_path(shipment), class: "btn btn-info btn-sm" %>
+          </td>
+          <td>
+            <%= button_to "Eliminar", shipment_path(shipment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm", onclick: "return confirm('Seguro que desea eliminar este envio?');" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+<div class="container mt-4">
+  <h2>Create New Shipment</h2>
+  
+  <%= form_with model: @shipment, url: shipments_path, local: true do |f| %>
+    <div class="mb-3">
+      <%= f.label :from_warehouse_id, "From Warehouse", class: "form-label" %>
+      <%= f.collection_select :from_warehouse_id, @warehouses, :id, :name, { prompt: "Select Warehouse" }, { class: "form-control" } %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :po_id, "To POS", class: "form-label" %>
+      <%= f.collection_select :po_id, @pos, :id, :name, { prompt: "Select POS" }, { class: "form-control" } %>
+    </div>
+
+    <%= f.submit "Create Shipment", class: "btn btn-primary" %>
+  <% end %>
+</div>

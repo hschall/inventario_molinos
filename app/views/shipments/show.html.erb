@@ -1,0 +1,163 @@
+  <% if flash[:alert] %>
+    <div class="alert alert-danger mt-3"><%= flash[:alert] %></div>
+  <% end %>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-success mt-3"><%= flash[:notice] %></div>
+  <% end %>
+
+
+<div class="mt-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2 class="mb-0">Envio #<%= @shipment.shipment_number %></h2>
+    
+    <% if @shipment.status == "Pending" %>
+      <%= button_to "Mandar Envio", shipment_submit_shipment_path(@shipment), 
+        method: :patch, class: "btn btn-success ms-3", onclick: "return confirm('Seguro que quiere mandar el envio a sucursal? Esta accion no se puede deshacer.');"%>
+    
+    <% elsif @shipment.status == "In Transit" %>
+      <%= button_to "Recibir Envio", shipment_receive_shipment_path(@shipment), 
+          method: :patch, class: "btn btn-warning ms-3", onclick: "return confirm('Seguro que quiere recibir el envio en la sucursal? Esta accion no se puede deshacer.');"%>
+
+    <% elsif @shipment.status == "Arrived" && @shipment.shipment_items.any? %>
+  <% discrepancies_exist = @shipment.shipment_items.any? do |item|
+       expected_count = item.quantity
+       received_count = @shipment.received_items.where(barcode: item.barcode).sum(:quantity)
+       expected_count != received_count
+     end %>
+
+  <% confirmation_message = discrepancies_exist ? "❗ There are discrepancies in this shipment. Are you sure you want to complete it?" : "Are you sure? Once marked as completed, this shipment cannot be edited." %>
+
+  <%= button_to "Completar recepcion de envio", shipment_complete_shipment_path(@shipment),
+    method: :patch, class: "btn btn-success ms-3", onclick: "return confirm('Seguro que quiere completar la recepcion del envio? Esta accion no se puede deshacer.');"%>
+<% end %>
+
+  </div>
+</div>
+
+<%# ✅ Add "Return to Shipments" Button After Completion %>
+<% if @shipment.status == "Completed" %>
+  <%= link_to "Regresar a Envios", shipments_po_path(@shipment.po), 
+    class: "btn btn-secondary mt-3" %>
+<% end %>
+
+<p><strong>Almacen:</strong> <%= @shipment.from_warehouse&.name || "N/A" %></p>
+<p><strong>Sucursal:</strong> <%= @shipment.po&.name || "N/A" %></p>
+
+<!-- ✅ Turbo-target for dynamic shipment status update -->
+<p id="shipment_status"><strong>Status:</strong> 
+  <%=
+    case @shipment.status
+    when "Pending"
+      "⏳ Pendiente"
+    when "In Transit"
+      "🚚 En camino"
+    when "Arrived"
+      "📥 Recibido"
+    when "Completed"
+      if @shipment.reload.has_discrepancies? || @shipment.reload.has_discrepancies
+        "❗ Completado con diferencias"
+      else
+        "✅ Completado"
+      end
+    else
+      "❓ Unknown"
+    end
+  %>
+</p>
+
+
+
+<% if @shipment.status == "Pending" %> 
+  <h3>Escanear productos para el Envio</h3>
+  <%= form_with url: add_item_shipment_path(@shipment), method: :post, local: true, id: "barcode_form" do |f| %>
+    <div class="mb-3">
+      <%= f.label :barcode, "Codigo de Barras de producto a enviar", class: "form-label" %>
+      <%= f.text_field :barcode, class: "form-control", id: "barcode_input", required: true %>
+    </div>
+    <%= f.submit "Agregar", class: "btn btn-primary" %>
+  <% end %>
+
+<% elsif @shipment.status == "Arrived" %>
+  <h3>Escanear productos recibidos en el Envio</h3>
+  <%= form_with url: shipment_scan_received_item_path(@shipment), method: :post, local: true, id: "barcode_scan_form" do |f| %>
+    <div class="mb-3">
+      <%= f.label :barcode, "Codigo de Barras de pruducto a recibir", class: "form-label" %>
+      <%= f.text_field :barcode, class: "form-control", id: "barcode_input", required: true %>
+    </div>
+    <%= f.submit "Agregar", class: "btn btn-primary" %>
+  <% end %>
+
+<% else %>
+  <p class="text-danger fw-bold mt-3">⚠️ No se permite modificar el envio cuando esta en camino o una vez que haya sido completado.</p>
+<% end %> 
+
+<h3 class="mt-4">Productos enviados vs. Productos recibidos</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID del Producto</th>
+      <th>Nombre del Producto</th>
+      <th>Cantidad esperada</th>
+      <th>Cantidad recibida</th>
+      <th>Discrepancias</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shipment.shipment_items.each do |item| %>
+      <tr>
+        <td><%= item.product.product_id %></td>
+        <td><%= item.product.product_name %></td>
+        <td><%= item.quantity %></td>
+        <td><%= @received_counts[item.barcode] || 0 %></td>
+        <td>
+          <% expected_count = item.quantity || 0 %>
+          <% received_count = @received_counts[item.barcode] || 0 %>
+
+          <% if received_count == expected_count %>
+            ✅ Cuadrado
+          <% elsif received_count < expected_count %>
+            ❌ Faltantes: <%= expected_count - received_count %>
+          <% else %>
+            ⚠️ Extras: <%= received_count - expected_count %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %> 
+  </tbody>
+</table>
+</div>
+
+<!-- ✅ Turbo-stream to update status dynamically -->
+<turbo-stream action="replace" target="shipment_status">
+  <template>
+    <p id="shipment_status"><strong>Estatus:</strong> 📥 Recibido</p>
+  </template>
+</turbo-stream>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let barcodeInput = document.getElementById("barcode_input");
+    
+    if (barcodeInput) {
+      barcodeInput.focus();
+  
+      barcodeInput.addEventListener("blur", function() {
+        setTimeout(() => barcodeInput.focus(), 100);
+      });
+
+      barcodeInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          
+          let shipmentStatus = "<%= @shipment.status %>"; // Get shipment status
+          if (shipmentStatus === "Pending") {
+            document.getElementById("barcode_form").submit(); // Submit Add Item Form
+          } else if (shipmentStatus === "Arrived") {
+            document.getElementById("barcode_scan_form").submit(); // Submit Scan Received Form
+          }
+        }
+      });
+    }
+});
+</script>

@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <h2>Productos</h2>
+  
+  <table class="table table-striped align-middle text-center">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Codigo de Barras</th>
+        <th>Unidad de Medida</th>
+        <th>Costo</th>
+        <th colspan="3">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+      <tr>
+        <td><%= product.product_id %></td>
+        <td><%= product.product_name %></td>
+        <td><%= product.product_description %></td>
+        <td><%= product.barcode %></td>
+        <td><%= product.uom %></td>
+        <td><%= product.price %></td>
+         <div class="center">
+        <td><%= link_to "Ver", product, class: "btn btn-outline-info btn-sm" %></td>
+        <td><%= button_to "Editar", edit_product_path(product), class: "btn btn-outline-info btn-sm" %></td>
+        <td><%= button_to "Eliminar", product, method: :delete, class: "btn btn-outline-danger btn-sm", onclick: "return confirm('Seguro que desead elimiar el producto?');" %></td>
+        
+        </div>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Crear Producto", new_product_path, class: "btn btn-primary" %>

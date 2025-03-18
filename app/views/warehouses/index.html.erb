@@ -1,0 +1,32 @@
+<div class="container mt-5">
+  <h2>Almacenes</h2>
+  
+  <table class="table table-striped align-middle text-center">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Direccion</th>
+        <th>CP</th>
+        <th colspan="3">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @warehouses.each do |warehouse| %>
+      <tr>
+        <td><%= warehouse.id %></td>
+        <td><%= warehouse.name %></td>
+        <td><%= warehouse.address %></td>
+        <td><%= warehouse.cp %></td>
+         <div class="center">
+        <td><%= link_to "Ver", warehouse, class: "btn btn-outline-info btn-sm" %></td>
+        <td><%= link_to "Editar", edit_warehouse_path(warehouse), class: "btn btn-outline-info btn-sm" %></td>
+        <td><%= button_to "Eliminar", warehouse, method: :delete, class: "btn btn-outline-danger btn-sm", onclick: "return confirm('Seguro?');" %></td>
+        
+        </div>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Crear Almacen", new_warehouse_path, class: "btn btn-primary" %>

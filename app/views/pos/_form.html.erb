@@ -1,0 +1,37 @@
+<%= form_with(model: po) do |form| %>
+  <% if po.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(po.errors.count, "error") %> prohibited this po from being saved:</h2>
+
+      <ul>
+        <% po.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Nombre", style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :ruta, "Ruta", style: "display: block" %>
+    <%= form.text_field :ruta %>
+  </div>
+
+  <div>
+    <%= form.label :address,  "Direccion", style: "display: block" %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div>
+    <%= form.label :cp, "CP", style: "display: block" %>
+    <%= form.text_field :cp %>
+  </div>
+
+  <div>
+    <%= form.submit "Crear Sucursal" %>
+  </div>
+<% end %>

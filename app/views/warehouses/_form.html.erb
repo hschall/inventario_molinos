@@ -1,0 +1,32 @@
+<%= form_with(model: warehouse) do |form| %>
+  <% if warehouse.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(warehouse.errors.count, "error") %> prohibited this warehouse from being saved:</h2>
+
+      <ul>
+        <% warehouse.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Nombre", style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :address, "Direccion", style: "display: block" %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div>
+    <%= form.label :cp, "CP", style: "display: block" %>
+    <%= form.text_field :cp %>
+  </div>
+
+  <div>
+    <%= form.submit "Crear Almacen" %>
+  </div>
+<% end %>
