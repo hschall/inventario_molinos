@@ -2,47 +2,54 @@ document.addEventListener('DOMContentLoaded', function () {
   const sidebar = document.getElementById('sidebar');
   const toggleButton = document.querySelector('.sidebar-toggle');
   const sidebarLinks = sidebar.querySelectorAll('a');
-  const dropdownToggles = sidebar.querySelectorAll('.nav-item.dropdown .nav-link');
 
-  // ✅ Master Data Management Toggle
-  const masterDataToggle = document.getElementById('masterDataToggle');
-  const masterDataCollapse = document.getElementById('masterDataCollapse');
-  const chevronIcon = document.getElementById('chevron-icon');
+  // ✅ Setup dropdowns for Master Data, Shipments, and Sucursales
+  setupDropdownToggle('masterDataToggle', 'masterDataCollapse', 'chevron-icon', 'masterDataExpanded');
+  setupDropdownToggle('shipmentsToggle', 'shipmentsCollapse', 'shipmentsChevron', 'shipmentsExpanded');
+  setupDropdownToggle('sucursalesToggle', 'sucursalesCollapse', 'sucursalesChevron', 'sucursalesExpanded');
 
-  if (masterDataToggle && masterDataCollapse) {
-    let isExpanded = localStorage.getItem('masterDataExpanded') === 'true';
+  function setupDropdownToggle(toggleId, collapseId, chevronId, storageKey) {
+    const toggle = document.getElementById(toggleId);
+    const collapse = document.getElementById(collapseId);
+    const chevron = document.getElementById(chevronId);
 
-    if (isExpanded) {
-      masterDataCollapse.style.display = 'block';
-      chevronIcon.classList.add('rotate');
-      masterDataToggle.classList.add('text-blue'); // ✅ Apply blue color when expanded
-    } else {
-      masterDataCollapse.style.display = 'none';
-      chevronIcon.classList.remove('rotate');
-      masterDataToggle.classList.remove('text-blue'); // ✅ Remove blue color when collapsed
-    }
+    if (toggle && collapse) {
+      let isExpanded = localStorage.getItem(storageKey) === 'true';
 
-    masterDataToggle.addEventListener('click', function (event) {
-      event.preventDefault();
-
-      if (masterDataCollapse.style.display === 'none') {
-        masterDataCollapse.style.display = 'block';
-        chevronIcon.classList.add('rotate');
-        masterDataToggle.classList.add('text-blue'); // ✅ Turn blue
-        localStorage.setItem('masterDataExpanded', 'true');
+      if (isExpanded) {
+        collapse.style.display = 'block';
+        chevron.classList.add('rotate');
+        toggle.classList.add('text-blue');
       } else {
-        masterDataCollapse.style.display = 'none';
-        chevronIcon.classList.remove('rotate');
-        masterDataToggle.classList.remove('text-blue'); // ✅ Revert color
-        localStorage.setItem('masterDataExpanded', 'false');
+        collapse.style.display = 'none';
+        chevron.classList.remove('rotate');
+        toggle.classList.remove('text-blue');
       }
-    });
+
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        if (collapse.style.display === 'none') {
+          collapse.style.display = 'block';
+          chevron.classList.add('rotate');
+          toggle.classList.add('text-blue');
+          localStorage.setItem(storageKey, 'true');
+        } else {
+          collapse.style.display = 'none';
+          chevron.classList.remove('rotate');
+          toggle.classList.remove('text-blue');
+          localStorage.setItem(storageKey, 'false');
+        }
+      });
+    }
   }
 
   // ✅ Toggle sidebar visibility on button click
-  toggleButton.addEventListener('click', function () {
-    sidebar.classList.toggle('show');
-  });
+  if (toggleButton) {
+    toggleButton.addEventListener('click', function () {
+      sidebar.classList.toggle('show');
+    });
+  }
 
   // ✅ Collapse sidebar when clicking a sidebar link (except dropdown toggles)
   sidebarLinks.forEach(link => {
@@ -129,18 +136,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
-function toggleDropdown(dropdownId, iconId) {
-  let dropdown = document.getElementById(dropdownId);
-  let icon = document.getElementById(iconId);
-
-  if (dropdown.classList.contains("show")) {
-    dropdown.classList.remove("show");
-    icon.classList.remove("fa-chevron-down");
-    icon.classList.add("fa-chevron-right");
-  } else {
-    dropdown.classList.add("show");
-    icon.classList.remove("fa-chevron-right");
-    icon.classList.add("fa-chevron-down");
-  }
-}

@@ -36,17 +36,48 @@
     </div>
   </div>
 
-  <!-- Other Sidebar Links -->
-  <div class="sidebar-links">
-    <%= link_to shipments_path, class: "d-flex align-items-center sidebar-item", data: { name: "Crear Envios", path: shipments_path } do %>
-      <%= image_tag("truck.png", alt: "Home", class: "me-2", style: "max-height: 25px;") %>
-      Crear Envios
-    <% end %>
+  <!-- Shipments (Envios) Collapsible Section -->
+  <div class="nav-item">
+    <a class="nav-link d-flex align-items-center" href="#" id="shipmentsToggle">
+      <%= image_tag("truck.png", alt: "Envios", class: "me-2", style: "max-height: 25px;") %>
+      Envios
+      <i class="fas fa-chevron-down ms-auto" id="shipmentsChevron"></i>
+    </a>
+    <div id="shipmentsCollapse" class="ms-3 collapse show">
+      <ul class="list-unstyled sidebar-links">
+        <li>
+          <%= link_to new_shipment_path, class: "d-flex align-items-center sidebar-item", data: { name: "Crear Envio", path: new_shipment_path } do %>
+            <%= image_tag("fast.png", alt: "Crear Envio", class: "me-2", style: "max-height: 20px;") %>
+            Crear Envio
+          <% end %>
+        </li>
+        <li>
+          <%= link_to shipments_path, class: "d-flex align-items-center sidebar-item", data: { name: "Listado de Envios", path: shipments_path } do %>
+            <%= image_tag("to-do-list.png", alt: "Lista de Envios", class: "me-2", style: "max-height: 20px;") %>
+            Lista de Envios
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-    <%= link_to dashboard_pos_path, class: "d-flex align-items-center sidebar-item", data: { name: "Sucursales", path: dashboard_pos_path } do %>
-      <%= image_tag("windmill.png", alt: "Home", class: "me-2", style: "max-height: 25px;") %>
+  <!-- Sucursales Collapsible Section -->
+  <div class="nav-item">
+    <a class="nav-link d-flex align-items-center" href="#" id="sucursalesToggle">
+      <%= image_tag("windmill.png", alt: "Sucursales", class: "me-2", style: "max-height: 25px;") %>
       Sucursales
-    <% end %>
+      <i class="fas fa-chevron-down ms-auto" id="sucursalesChevron"></i>
+    </a>
+    <div id="sucursalesCollapse" class="ms-3 collapse show">
+      <ul class="list-unstyled sidebar-links">
+        <li>
+          <%= link_to dashboard_pos_path, class: "d-flex align-items-center sidebar-item", data: { name: "Tablero de Sucursales", path: dashboard_pos_path } do %>
+            <%= image_tag("dashboard.png", alt: "Tablero de Sucursales", class: "me-2", style: "max-height: 17px;") %>
+            Tablero de Sucursales
+          <% end %>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <!-- Divider Line Above User Dropdown -->
@@ -71,5 +102,4 @@
       </ul>
     </li>
   </div>
-  
 </div>
