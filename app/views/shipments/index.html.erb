@@ -13,6 +13,7 @@
         <th>Origen</th>
         <th>Destino</th>
         <th>Estatus</th>
+        <th>Ultima Actualizacion</th>
         <th colspan="2">Acciones</th>
       </tr>
     </thead>
@@ -40,6 +41,7 @@
                 <%= "❓ Unknown" %>
             <% end %>
           </td>
+          <td><%= shipment.status_updated_at.present? ? shipment.status_updated_at.strftime("%d/%m/%Y %H:%M:%S") : "N/A" %></td>
           <td>
             <%= link_to "Ver", shipment_path(shipment), class: "btn btn-info btn-sm", style: "padding: 2px 6px; font-size: 0.75rem;"  %>
           </td>

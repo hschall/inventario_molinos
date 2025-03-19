@@ -34,6 +34,8 @@
 
 <p><strong>Origen:</strong> <%= @shipment.from_warehouse&.name || "N/A" %></p>
 <p><strong>Destino:</strong> <%= @shipment.po&.name || "N/A" %></p>
+<p><strong>Last Status Change:</strong> <%= @shipment.status_updated_at.present? ? @shipment.status_updated_at.strftime("%d/%m/%Y %H:%M:%S") : "N/A" %></p>
+
 
 <!-- ✅ Turbo-target for dynamic shipment status update -->
 <p id="shipment_status"><strong>Status:</strong> 

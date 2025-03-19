@@ -31,12 +31,14 @@ end
   @shipment = Shipment.new(
     from_warehouse_id: params[:shipment][:from_warehouse_id],
     po_id: params[:shipment][:po_id],
-    status: "Pending"
+    status: "Pending",
+    status_updated_at: Time.current.in_time_zone("America/Mexico_City")
   )
 
   if @shipment.save
     flash[:notice] = "Envio creado correctamente!"
     redirect_to shipment_path(@shipment)
+
   else
     flash[:alert] = "No se pudo crear el Envio."
     render :new
@@ -112,7 +114,7 @@ end
 
   def submit_shipment
   if @shipment.status == "Pending"
-    @shipment.update(status: "In Transit")
+    @shipment.update(status: "In Transit", status_updated_at: Time.current.in_time_zone("America/Mexico_City"))
     flash[:notice] = "Envio se encuentra en ruta."
   else
     flash[:alert] = "No se puede mandar este Envio."
@@ -120,9 +122,10 @@ end
   redirect_to shipments_path
 end
 
+
   def receive_shipment
   if @shipment.present? && @shipment.status == "In Transit"
-    @shipment.update(status: "Arrived")
+    @shipment.update(status: "Arrived", status_updated_at: Time.current.in_time_zone("America/Mexico_City"))
 
     respond_to do |format|
       format.html { redirect_to shipment_path(@shipment), notice: "Envio recibido correctamente!" } # ✅ Redirects back to shipment details
@@ -173,8 +176,7 @@ def complete_shipment
   if @shipment.status == "Arrived"
     discrepancies_exist = @shipment.has_discrepancies? # Ensure we detect discrepancies
 
-    @shipment.update!(status: "Completed", has_discrepancies: discrepancies_exist) # Force save!
-
+    @shipment.update!(status: "Completed", has_discrepancies: discrepancies_exist, status_updated_at: Time.current.in_time_zone("America/Mexico_City"))
     respond_to do |format|
       format.html { redirect_to shipment_path(@shipment), notice: "Ha completado la recepcion del Envio!" }
       format.turbo_stream

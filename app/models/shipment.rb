@@ -8,6 +8,7 @@ class Shipment < ApplicationRecord
   validates :shipment_number, uniqueness: true
 
   before_create :generate_shipment_number
+  before_update :update_status_timestamp, if: :status_changed?
 
       def has_discrepancies?
   shipment_items.reload.any? do |item| # ✅ Forces reloading
@@ -23,6 +24,14 @@ end
 
   def generate_shipment_number
     self.shipment_number = "SHP#{Time.now.to_i}"
+  end
+
+  def set_initial_status_timestamp
+    self.status_updated_at = Time.current.in_time_zone("America/Mexico_City") # Replace with your timezone
+  end
+
+  def update_status_timestamp
+    self.status_updated_at = Time.current.in_time_zone("America/Mexico_City") # Replace with your timezone
   end
 
 end

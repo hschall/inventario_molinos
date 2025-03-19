@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_18_190149) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_19_183205) do
   create_table "inventories", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "barcode"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_190149) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "has_discrepancies"
+    t.datetime "status_updated_at"
     t.index ["from_warehouse_id"], name: "index_shipments_on_from_warehouse_id"
     t.index ["po_id"], name: "index_shipments_on_po_id"
   end

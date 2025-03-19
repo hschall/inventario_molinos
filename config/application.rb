@@ -23,5 +23,10 @@ module InventoryApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # ✅ Set default time zone to Mexico City
+    config.time_zone = "America/Mexico_City"
+
+    # ✅ Ensure ActiveRecord uses local time
+    config.active_record.default_timezone = :local
   end
 end
