@@ -21,7 +21,7 @@
   color: #212529; /* Dark text color for better contrast on white */
   text-decoration: none;
   padding: 10px 10px;
-  font-size: 16px; /* Increase font size (default is typically ~14px) */
+  font-size: 13px; /* Increase font size (default is typically ~14px) */
   display: flex;
   align-items: center;
   border-radius: 4px; /* Add slight rounding for link background hover */
@@ -104,7 +104,7 @@
   display: flex;
   align-items: center;
   justify-content: right; /* Centers text */
-  font-size: 15px;
+  font-size: 12.5px;
 }
 
 
@@ -158,4 +158,25 @@
 
 .text-blue {
   color: #f05a10 !important;
+}
+
+#searchResults {
+  z-index: 000;
+  background-color: white;
+  border: 0px solid #ccc;
+  border-radius: 0px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 12.5px;
+}
+
+#searchResults .list-group-item:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.active-sidebar-item {
+  background-color: #f0f0f0 !important;
+  border-radius: 5px;
+  padding: 5px;
 }

@@ -88,3 +88,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+function filterSidebarOptions() {
+  let input = document.getElementById("sidebarSearch").value.toLowerCase();
+  let items = document.querySelectorAll(".sidebar-item");
+  let resultsContainer = document.getElementById("searchResults");
+  resultsContainer.innerHTML = ""; // Clear previous results
+
+  if (input === "") {
+    resultsContainer.classList.add("d-none");
+    return;
+  }
+
+  items.forEach((item) => {
+    let name = item.dataset.name.toLowerCase();
+    let link = item.href;
+
+    if (name.includes(input)) {
+      let listItem = document.createElement("li");
+      listItem.classList.add("list-group-item", "list-group-item-action");
+      listItem.textContent = item.dataset.name;
+      listItem.onclick = function () {
+        window.location.href = link;
+      };
+      resultsContainer.appendChild(listItem);
+    }
+  });
+
+  resultsContainer.classList.remove("d-none");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  let currentPath = window.location.pathname;
+  let sidebarItems = document.querySelectorAll(".sidebar-item");
+
+  sidebarItems.forEach(item => {
+    let itemPath = item.dataset.path;
+    if (currentPath === itemPath) {
+      item.classList.add("active-sidebar-item");
+    }
+  });
+});
+
+function toggleDropdown(dropdownId, iconId) {
+  let dropdown = document.getElementById(dropdownId);
+  let icon = document.getElementById(iconId);
+
+  if (dropdown.classList.contains("show")) {
+    dropdown.classList.remove("show");
+    icon.classList.remove("fa-chevron-down");
+    icon.classList.add("fa-chevron-right");
+  } else {
+    dropdown.classList.add("show");
+    icon.classList.remove("fa-chevron-right");
+    icon.classList.add("fa-chevron-down");
+  }
+}

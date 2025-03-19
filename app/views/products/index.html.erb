@@ -1,9 +1,13 @@
-<div class="container mt-5">
-  <h2>Productos</h2>
-  
-  <table class="table table-striped align-middle text-center">
-    <thead>
-      <tr>
+<%= link_to "Nuevo Registro", new_product_path, class: "btn btn-primary", style: "background-color: #4f98bf; border: none; padding: 4px 10px; font-size: 0.85rem;" %>
+
+<div class="container-fluid mt-5">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle text-center w-150" style="border-radius: 7px; overflow: hidden; font-size: 0.75rem;">
+      <thead>
+        <!-- Full-width header row with custom color -->
+        <tr>
+          <th colspan="9" class="text-white text-start px-2.5 py-1 fw-normal" style="background-color: #1b5892; font-size: 0.95rem;">Productos</th>
+        </tr>
         <th>ID</th>
         <th>Nombre</th>
         <th>Descripcion</th>
@@ -23,14 +27,12 @@
         <td><%= product.uom %></td>
         <td><%= product.price %></td>
          <div class="center">
-        <td><%= link_to "Ver", product, class: "btn btn-outline-info btn-sm" %></td>
-        <td><%= button_to "Editar", edit_product_path(product), class: "btn btn-outline-info btn-sm" %></td>
-        <td><%= button_to "Eliminar", product, method: :delete, class: "btn btn-outline-danger btn-sm", onclick: "return confirm('Seguro que desead elimiar el producto?');" %></td>
+        <td><%= link_to "Ver", product, class: "btn btn-outline-info btn-sm", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
+        <td><%= button_to "Editar", edit_product_path(product), class: "btn btn-outline-info btn-sm", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
+        <td><%= button_to "Eliminar", product, method: :delete, class: "btn btn-outline-danger btn-sm", onclick: "return confirm('Seguro que desead elimiar el producto?');", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
         
         </div>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "Crear Producto", new_product_path, class: "btn btn-primary" %>

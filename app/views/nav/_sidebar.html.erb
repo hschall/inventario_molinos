@@ -1,27 +1,33 @@
 <div class="sidebar collapse show" id="sidebar">
+  <!-- Search Bar -->
+  <div class="p-2">
+    <input type="text" id="sidebarSearch" class="form-control" placeholder="Buscar..." onkeyup="filterSidebarOptions()">
+    <ul id="searchResults" class="list-group position-absolute w-100 d-none"></ul>
+  </div>
+
   <!-- Master Data Management Collapsible Section -->
   <div class="nav-item">
     <a class="nav-link d-flex align-items-center" href="#" id="masterDataToggle">
-  <%= image_tag("chicken.svg", alt: "Gestión de Datos Maestros", class: "me-2", style: "max-height: 20px;") %>
-  Gestión de Datos Maestros
-  <i class="fas fa-chevron-down ms-auto" id="chevron-icon"></i>
-</a>
+      <%= image_tag("data.svg", alt: "Gestión de Datos Maestros", class: "me-2", style: "max-height: 28px;") %>
+      Datos Maestros
+      <i class="fas fa-chevron-down ms-auto" id="chevron-icon"></i>
+    </a>
     <div id="masterDataCollapse" class="ms-3 collapse show">
-      <ul class="list-unstyled">
+      <ul class="list-unstyled sidebar-links">
         <li>
-          <%= link_to warehouses_path, class: "d-flex align-items-center" do %>
+          <%= link_to warehouses_path, class: "d-flex align-items-center sidebar-item", data: { name: "Crear CEDIS", path: warehouses_path } do %>
             <%= image_tag("warehouse.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
             Crear CEDIS
           <% end %>
         </li>
         <li>
-          <%= link_to pos_path, class: "d-flex align-items-center" do %>
+          <%= link_to pos_path, class: "d-flex align-items-center sidebar-item", data: { name: "Crear Sucursales", path: pos_path } do %>
             <%= image_tag("POS.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
             Crear Sucursales
           <% end %>
         </li>
         <li>
-          <%= link_to products_path, class: "d-flex align-items-center" do %>
+          <%= link_to products_path, class: "d-flex align-items-center sidebar-item", data: { name: "Crear Productos", path: products_path } do %>
             <%= image_tag("product.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
             Crear Productos
           <% end %>
@@ -31,38 +37,15 @@
   </div>
 
   <!-- Other Sidebar Links -->
-  <div>
-    <%= link_to shipments_path, class: "d-flex align-items-center" do %>
-      <%= image_tag("shipment.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+  <div class="sidebar-links">
+    <%= link_to shipments_path, class: "d-flex align-items-center sidebar-item", data: { name: "Crear Envios", path: shipments_path } do %>
+      <%= image_tag("truck.png", alt: "Home", class: "me-2", style: "max-height: 25px;") %>
       Crear Envios
     <% end %>
 
-    <%= link_to dashboard_pos_path, class: "d-flex align-items-center" do %>
-      <%= image_tag("dashboard.svg", alt: "Home", class: "me-2", style: "max-height: 20px;") %>
+    <%= link_to dashboard_pos_path, class: "d-flex align-items-center sidebar-item", data: { name: "Sucursales", path: dashboard_pos_path } do %>
+      <%= image_tag("windmill.png", alt: "Home", class: "me-2", style: "max-height: 25px;") %>
       Sucursales
     <% end %>
-  </div>
-
-  <!-- Divider Line Above User Dropdown -->
-  <hr class="user-dropdown-divider">
-
-  <!-- User Dropdown -->
-  <div class="user-dropdown">
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-user me-1"></i> Usuario
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li>
-          <%= link_to "Editar Usuario", root_path, class: "dropdown-item" %>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-        <li>
-          <%# <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" %> %>
-        </li>
-      </ul>
-    </li>
   </div>
 </div>
