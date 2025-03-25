@@ -26,8 +26,8 @@ end
     patch "complete_shipment", to: "shipments#complete_shipment", as: "complete_shipment"
   end
 
-  root 'warehouses#index'
-  get 'nav/index'
+  root 'nav#index'
+  #get 'nav/index'
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
