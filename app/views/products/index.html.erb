@@ -28,7 +28,7 @@
         <td><%= product.price %></td>
          <div class="center">
         <td><%= link_to "Ver", product, class: "btn btn-outline-info btn-sm", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
-        <td><%= button_to "Editar", edit_product_path(product), class: "btn btn-outline-info btn-sm", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
+        <td><%= link_to "Editar", edit_product_path(product), class: "btn btn-outline-info btn-sm", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
         <td><%= button_to "Eliminar", product, method: :delete, class: "btn btn-outline-danger btn-sm", onclick: "return confirm('Seguro que desead elimiar el producto?');", style: "padding: 2px 6px; font-size: 0.75rem;" %></td>
         
         </div>

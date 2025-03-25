@@ -172,20 +172,43 @@ def scan_received_item
 end
 
 
+
 def complete_shipment
   if @shipment.status == "Arrived"
-    discrepancies_exist = @shipment.has_discrepancies? # Ensure we detect discrepancies
+    discrepancies_exist = @shipment.has_discrepancies? # ✅ Detect discrepancies
 
-    @shipment.update!(status: "Completed", has_discrepancies: discrepancies_exist, status_updated_at: Time.current.in_time_zone("America/Mexico_City"))
+    ActiveRecord::Base.transaction do
+      # ✅ Mark the shipment as completed
+      @shipment.update!(status: "Completed", has_discrepancies: discrepancies_exist, status_updated_at: Time.current)
+
+      # ✅ Auto-add products to the POS inventory
+      @shipment.shipment_items.each do |item|
+        @shipment.po.pos_inventories.create!(
+          product_id: item.product.id,
+          product_name: item.product.product_name,  # ✅ Use correct column names
+          product_description: item.product.product_description, 
+          barcode: item.product.barcode,
+          uom: item.product.uom,
+          qty: @received_counts[item.barcode] || 0,
+          price: item.product.price,
+          added_at: Time.current,
+          added_by: "Shipment" # ✅ Marks it as received via shipment
+        )
+      end
+    end
+
     respond_to do |format|
-      format.html { redirect_to shipment_path(@shipment), notice: "Ha completado la recepcion del Envio!" }
+      format.html { redirect_to shipment_path(@shipment), notice: "Envío completado y productos agregados al inventario del POS." }
       format.turbo_stream
     end
   else
-    flash[:alert] = "Error al completar el envio."
+    flash[:alert] = "Error al completar el envío."
     redirect_to shipment_path(@shipment)
   end
 end
+
+
+
 
 
 

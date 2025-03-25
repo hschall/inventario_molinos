@@ -1,0 +1,17 @@
+<h2>Añadir Producto a Inventario</h2>
+
+<%= form_with model: [@po, @pos_inventory], local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :product_id, "Producto" %>
+    <%= form.collection_select :product_id, Product.all, :id, :product_name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :quantity, "Cantidad" %>
+    <%= form.number_field :quantity, class: "form-control", min: 1 %>
+  </div>
+
+  <%= form.submit "Añadir", class: "btn btn-success" %>
+<% end %>
+
+<%= link_to "Volver", po_pos_inventories_path(@po), class: "btn btn-secondary mt-3" %>

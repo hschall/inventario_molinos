@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_19_183205) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_20_014603) do
   create_table "inventories", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "barcode"
@@ -26,6 +26,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_19_183205) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "ruta"
+  end
+
+  create_table "pos_inventories", force: :cascade do |t|
+    t.integer "po_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "added_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "product_name"
+    t.string "product_description"
+    t.integer "barcode"
+    t.string "uom"
+    t.integer "qty"
+    t.decimal "price"
+    t.string "added_by"
+    t.index ["po_id"], name: "index_pos_inventories_on_po_id"
+    t.index ["product_id"], name: "index_pos_inventories_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -81,6 +99,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_19_183205) do
   end
 
   add_foreign_key "inventories", "products"
+  add_foreign_key "pos_inventories", "pos"
+  add_foreign_key "pos_inventories", "products"
   add_foreign_key "received_items", "shipments"
   add_foreign_key "shipment_items", "products"
   add_foreign_key "shipment_items", "shipments"

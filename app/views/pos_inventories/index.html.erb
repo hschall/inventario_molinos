@@ -1,0 +1,41 @@
+<h2>Inventario de <%= @po.name %></h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Código de Barras</th>
+      <th>Descripción</th>
+      <th>Unidad</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Fecha de Adición</th>
+      <th>Fuente</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @inventory.each do |item| %>
+      <tr>
+        <td><%= item.product_name %></td>
+        <td><%= item.barcode %></td>
+        <td><%= item.product_description %></td>
+        <td><%= item.uom %></td>
+        <td><%= item.qty %></td>
+        <td>$<%= item.price %></td>
+        <td><%= item.added_at.strftime("%d/%m/%Y %H:%M") %></td>
+        <td><%= item.added_by.capitalize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- Barcode Entry Form -->
+<h3>Agregar Producto por Código de Barras</h3>
+<%= form_with url: inventory_add_po_po_path(po_id: @po.id), method: :post, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :barcode, "Escanear Código de Barras" %>
+    <%= f.text_field :barcode, class: "form-control", autofocus: true %>
+  </div>
+  <%= f.submit "Agregar", class: "btn btn-primary" %>
+<% end %>
+
