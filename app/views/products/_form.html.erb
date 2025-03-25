@@ -27,18 +27,18 @@
   </div>
 
   <div>
-    <%= form.label :barcode, "Codigo de Barras", style: "display: block" %>
-    <%= form.number_field :barcode %>
-  </div>
-
-  <div>
     <%= form.label :uom, "Unidad de Medida", style: "display: block" %>
-    <%= form.number_field :uom %>
+    <%= form.text_field :uom %>
   </div>
 
   <div>
     <%= form.label :price, "Costo", style: "display: block" %>
     <%= form.number_field :price %>
+  </div>
+
+  <div>
+    <%= form.label :barcode, "Codigo de Barras", style: "display: block" %>
+    <%= form.number_field :barcode %>
   </div>
 
   <div>
